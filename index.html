@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Session Log</title>
+<title>Load &amp; Fuel</title>
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<meta name="theme-color" content="#141310" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Load & Fuel" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
@@ -192,64 +199,64 @@
 <script>
 (function(){
   const WORKOUTS = {
-    0:{ label:"Weekend Rest", sub:"Active recovery", exercises:[
-      {name:"Walk / light activity", note:"No lifting — let the nervous system recover"},
+    0:{ label:"Prep Day", sub:"Sunday · Batch cook for the week", exercises:[
+      {name:"Batch cook 5 days chicken & rice", note:"Portion for Mon–Fri office/WFH lunches"},
+      {name:"Freezer → fridge: Thu/Fri chicken", note:"So it's ready to thaw in time"},
     ]},
-    1:{ label:"Upper Body A — Width & Arms", sub:"Office day · 35–40 min cap", exercises:[
-      {name:"Lat Pulldowns (Wide Grip)", sets:"3 × 8–10", note:"Pulls shoulders outward for back width"},
-      {name:"Incline Dumbbell Press", sets:"3 × 8–10", note:"Fills out upper chest / collarbone area"},
-      {name:"Dumbbell Lateral Raises", sets:"4 × 12–15", note:"Spam these — key for wide shoulders"},
-      {name:"Tricep Rope Pushdowns", sets:"3 × 10–12", note:"Flares outer tricep head for arm thickness"},
-      {name:"Dumbbell Hammer Curls", sets:"3 × 10–12", note:"Targets brachialis, widens arm from the front"},
+    1:{ label:"Upper A", sub:"Office day · Gym 6:00–6:45 PM", exercises:[
+      {name:"Incline Dumbbell Press", sets:"3 × 8–10"},
+      {name:"Wide-Grip Lat Pulldowns", sets:"3 × 8–10"},
+      {name:"Dumbbell Lateral Raises", sets:"4 × 12–15"},
+      {name:"Cable Tricep Pushdowns", sets:"3 × 10–12"},
+      {name:"Face Pulls", sets:"3 × 12–15"},
     ]},
-    2:{ label:"Lower Body & Cardio", sub:"Office day", exercises:[
-      {name:"Leg Press", sets:"3 × 10"},
-      {name:"Romanian Deadlifts / Leg Curls", sets:"3 × 10–12", note:"Tightens hamstrings & glutes"},
-      {name:"Standing Calf Raises", sets:"3 × 15"},
-      {name:"Treadmill Incline Walk", sets:"15 min", note:"12 incline / 4 speed — flushes bloat"},
+    2:{ label:"Lower A", sub:"Office day · Gym 6:00–6:45 PM", exercises:[
+      {name:"Leg Press or Hack Squat", sets:"3 × 8–10"},
+      {name:"Leg Extensions", sets:"3 × 10–12"},
+      {name:"Hanging or Lying Leg Raises", sets:"3 × to failure"},
+      {name:"Incline Treadmill Walk", sets:"15 min"},
     ]},
-    3:{ label:"Full Rest", sub:"No gym today", exercises:[
-      {name:"Walk 8,000 steps", note:"Naturally during office hours"},
+    3:{ label:"Rest", sub:"Office day · Move chicken freezer → fridge", exercises:[
+      {name:"Move Thu/Fri chicken to fridge", note:"So it thaws in time for cooking"},
+      {name:"No gym today", note:"German class 8–10 PM as usual"},
     ]},
-    4:{ label:"Upper Body B — Thickness & Shoulder Blast", sub:"WFH day", exercises:[
-      {name:"Seated Cable Rows / T-Bar Rows", sets:"3 × 8–10", note:"Builds thick mid-back"},
-      {name:"DB Overhead Shoulder Press", sets:"3 × 8–10", note:"Builds shoulder cap density"},
-      {name:"Dumbbell Lateral Raises", sets:"4 × 12–15", note:"2nd width session this week"},
-      {name:"Overhead Tricep Extension", sets:"3 × 10–12", note:"Hits long head for size"},
-      {name:"Barbell / DB Bicep Curls", sets:"3 × 8–10", note:"Bicep peak builder"},
+    4:{ label:"Upper B", sub:"WFH day · Gym 6:00–6:45 PM", exercises:[
+      {name:"Seated Cable Rows", sets:"3 × 8–10"},
+      {name:"Dumbbell Shoulder Press", sets:"3 × 8–10"},
+      {name:"Cable or DB Lateral Raises", sets:"4 × 12–15"},
+      {name:"Incline Dumbbell Bicep Curls", sets:"3 × 10–12"},
+      {name:"Machine Chest Fly (Pec Deck)", sets:"3 × 10–12"},
     ]},
-    5:{ label:"Lower Body & Abs", sub:"WFH day", exercises:[
-      {name:"Leg Extensions", sets:"3 × 12"},
-      {name:"Lying / Seated Leg Curls", sets:"3 × 12"},
-      {name:"Hanging Leg Raises / Cable Crunch", sets:"3 × 15"},
-      {name:"Treadmill Incline Walk", sets:"15 min", note:"12 incline / 4 speed"},
+    5:{ label:"Lower B", sub:"WFH day · Gym 6:00–6:45 PM", exercises:[
+      {name:"Dumbbell Romanian Deadlifts", sets:"3 × 8–10"},
+      {name:"Lying Leg Curls", sets:"3 × 10–12"},
+      {name:"Planks", sets:"3 × 45–60 sec"},
+      {name:"Incline Treadmill Walk", sets:"15 min"},
     ]},
-    6:{ label:"Weekend Rest", sub:"Active recovery", exercises:[
-      {name:"Walk / light activity", note:"No lifting — let the nervous system recover"},
+    6:{ label:"Rest Day", sub:"Flexible nutrition · Full recovery", exercises:[
+      {name:"Full recovery", note:"Keep protein high, stay flexible on the rest"},
     ]},
   };
 
   const MEAL_SETS = {
-    A:{ target:111, meals:[
-      {time:"8:30 AM", name:"Oats (50g in milk) + 3 egg whites", protein:21},
-      {time:"1:30 PM", name:"150g prepped chicken breast + rice/roti", protein:36},
-      {time:"5:00 PM", name:"2 slices bread + 1 banana", protein:6},
-      {time:"10:00 PM", name:"6-egg bhurji (2 whole + 4 white) + rice/chapati", protein:28},
+    OFFICE:{ target:128, meals:[
+      {time:"Breakfast", name:"60g oats + 200ml milk + 16g PB + banana + honey + chia", protein:19},
+      {time:"1:30 PM", name:"200g chicken breast + 150g rice + olive oil", protein:66},
+      {time:"5:30 PM", name:"Pre-workout snack + creatine (3–5g)", protein:2},
+      {time:"10:00 PM", name:"4 egg whites + 2 whole eggs + rice + dal + veg", protein:38},
     ]},
-    B:{ target:113, meals:[
-      {time:"8:30 AM", name:"Oats (50g in milk) + 3 egg whites", protein:21},
-      {time:"1:30 PM", name:"6-egg bhurji + rice & dal", protein:28},
-      {time:"5:00 PM", name:"2 slices bread + 1 banana", protein:6},
-      {time:"8:30 PM", name:"200g pan-seared chicken breast + rice/salad", protein:46},
+    WFH:{ target:128, meals:[
+      {time:"Breakfast", name:"60g oats + 200ml milk + 16g PB + banana + honey + chia", protein:19},
+      {time:"Lunch", name:"Mess/home food (dal, rice, sabzi) + 2 boiled eggs", protein:26},
+      {time:"5:30 PM", name:"Pre-workout snack + creatine (3–5g)", protein:2},
+      {time:"10:00 PM", name:"4 egg whites + 2 whole eggs + rice + dal + veg", protein:38},
     ]},
-    C:{ target:111, meals:[
-      {time:"9:00 AM", name:"Oats (50g) + milk + 3 egg whites", protein:21},
-      {time:"2:00 PM", name:"150g chicken breast + rice & dal", protein:38},
-      {time:"5:30 PM", name:"2 slices bread + 1 banana", protein:6},
-      {time:"8:30 PM", name:"6-egg bhurji + 2 chapatis", protein:28},
+    FLEX:{ target:128, meals:[
+      {time:"All day", name:"Flexible, high-protein meals — your choice", protein:0},
+      {time:"Daily", name:"Creatine (3–5g in water)", protein:0},
     ]},
   };
-  const MEAL_SET_FOR_DAY = {0:'C',1:'A',2:'A',3:'A',4:'B',5:'B',6:'C'};
+  const MEAL_SET_FOR_DAY = {0:'FLEX',1:'OFFICE',2:'OFFICE',3:'OFFICE',4:'WFH',5:'WFH',6:'FLEX'};
 
   const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   const DAY_SHORT = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
@@ -265,8 +272,8 @@
 
   async function getState(key, fallbackLen){
     try{
-      const r = await window.storage.get(key);
-      const arr = JSON.parse(r.value);
+      const raw = localStorage.getItem(key);
+      const arr = JSON.parse(raw);
       if(Array.isArray(arr) && arr.length===fallbackLen) return arr;
       return new Array(fallbackLen).fill(false);
     }catch(e){
@@ -274,7 +281,7 @@
     }
   }
   async function setState(key, arr){
-    try{ await window.storage.set(key, JSON.stringify(arr)); }catch(e){ console.error('storage set failed', e); }
+    try{ localStorage.setItem(key, JSON.stringify(arr)); }catch(e){ console.error('storage set failed', e); }
   }
 
   // cache of {workout:[bool], meals:[bool]} per date key, loaded lazily
@@ -445,7 +452,7 @@
           <div class="card-head">
             <div class="card-tag">Fuel</div>
             <div class="card-title">Protein Load</div>
-            <div class="card-sub">Zero whey · ${mealSetKey==='A'?'office days':mealSetKey==='B'?'WFH days':'weekend'}</div>
+            <div class="card-sub">${mealSetKey==='OFFICE'?'Office day · packed lunch':mealSetKey==='WFH'?'WFH day · mess/home lunch':'Flexible · high protein'}</div>
           </div>
           <div class="bar-wrap">
             ${barbellHTML(proteinPct)}
@@ -459,7 +466,7 @@
       </div>
 
       <div class="footnote">
-        <b>Rules:</b> batch-prep chicken Sun &amp; Wed night · cap gym at 40 min · ate junk? lift heavy anyway, don't skip.
+        <b>Logistics:</b> Sunday = batch cook 5 days chicken &amp; rice · Wednesday = move Thu/Fri chicken freezer → fridge · gym is 6:00–6:45 PM before German class · creatine (3–5g) daily.
         <br/><button class="reset-link" id="resetDay">Clear today's checks</button>
       </div>
     `;
@@ -495,6 +502,12 @@
   }
 
   render();
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch((e) => console.error('SW registration failed', e));
+    });
+  }
 })();
 </script>
 </body>
